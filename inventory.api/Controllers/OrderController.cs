@@ -8,6 +8,6 @@ namespace inventory.api.Controllers;
 public class OrderController : BaseController
 {
     [HttpPost("Buy")]
-    public Task<bool> AddProduct(AddOrderDto command)
+    public Task AddProduct(AddOrderDto command)
     => Mediator.Send(new AddOrderCommand(command));
 }

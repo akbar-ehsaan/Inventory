@@ -4,7 +4,7 @@ using MediatR;
 
 namespace inventory.api.Application.Commands
 {
-    public sealed record IncreaseInventoryCommand(string ProductId, int Amount) : IRequest<bool>
+    public sealed record IncreaseInventoryCommand(string ProductId, int Amount) : IRequest
     {
         public sealed class IncreaseInventoryValidator : AbstractValidator<IncreaseInventoryCommand>
         {
@@ -18,15 +18,15 @@ namespace inventory.api.Application.Commands
 
             }
         }
-        public sealed class Hander(IProductRepository productRepository) : IRequestHandler<IncreaseInventoryCommand, bool>
+        public sealed class Hander(IProductRepository productRepository) : IRequestHandler<IncreaseInventoryCommand>
         {
-            public async Task<bool> Handle(IncreaseInventoryCommand request, CancellationToken cancellationToken)
+            public async Task Handle(IncreaseInventoryCommand request, CancellationToken cancellationToken)
             {
                 var product = await productRepository.GetByIdAsync(Guid.Parse(request.ProductId));
                 if (product is not null)
                 {
                     product.IncreaseInventory(request.Amount);
-                    return await productRepository.UpdateAsync(product);
+                     await productRepository.UpdateAsync(product);
                 }
                 throw new Exception("Product doesn't exist");
 

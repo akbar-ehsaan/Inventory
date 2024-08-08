@@ -12,7 +12,7 @@ namespace inventory.api.Controllers;
 public class ProductController : BaseController
 {
     [HttpPost]
-    public Task<bool> AddProduct(AddProductDto command)
+    public Task AddProduct(AddProductDto command)
         => Mediator.Send(new AddProductCommand(command.ToProductEntity()));
 
     [HttpGet]
@@ -20,6 +20,6 @@ public class ProductController : BaseController
         => Mediator.Send(new GetProductByIdQuery(productId));
 
     [HttpPut("IncreaseInventory")]
-    public Task<bool> IncreaseInventory(IncreaseInventoryCommand cmd)
+    public Task IncreaseInventory(IncreaseInventoryCommand cmd)
         => Mediator.Send(cmd);
 }

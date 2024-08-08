@@ -7,7 +7,7 @@ using System.Net;
 
 namespace inventory.api.Application.Commands;
 
-public sealed record AddProductCommand(Product product):IRequest<bool>
+public sealed record AddProductCommand(Product product):IRequest
 {
     public sealed class AddProductValidator : AbstractValidator<AddProductCommand>
     {
@@ -25,9 +25,9 @@ public sealed record AddProductCommand(Product product):IRequest<bool>
                 .WithMessage("A product with this title already exists.");
         }
     }
-    public sealed class Handler(IProductRepository productRepository) : IRequestHandler<AddProductCommand, bool>
+    public sealed class Handler(IProductRepository productRepository) : IRequestHandler<AddProductCommand>
     {
-        public async Task<bool> Handle(AddProductCommand request, CancellationToken cancellationToken) 
-            => await productRepository.AddAsync(request.product);
+        public async Task Handle(AddProductCommand request, CancellationToken cancellationToken) => 
+            await productRepository.AddAsync(request.product);
     }
 }

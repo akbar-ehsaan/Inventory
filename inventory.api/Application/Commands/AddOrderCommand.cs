@@ -7,7 +7,7 @@ using MediatR;
 
 namespace inventory.api.Application.Commands
 {
-    public sealed record AddOrderCommand(AddOrderDto Order) : IRequest<bool>
+    public sealed record AddOrderCommand(AddOrderDto Order) : IRequest
     {
 
         public sealed class AddOrderValidator : AbstractValidator<AddOrderCommand>
@@ -27,12 +27,11 @@ namespace inventory.api.Application.Commands
             }
         }
         public sealed class Handler(IProductRepository productRepository
-                                    , IUserRepository userRepository) : IRequestHandler<AddOrderCommand, bool>
+                                    , IUserRepository userRepository) : IRequestHandler<AddOrderCommand>
         {
-            public async Task<bool> Handle(AddOrderCommand request, CancellationToken cancellationToken)
+            public async Task Handle(AddOrderCommand request, CancellationToken cancellationToken)
             {
-                try
-                {
+               
                     var user = await userRepository.GetByIdAsync(Guid.Parse(request.Order.UserId));
 
                     if (user == null) throw new Exception("User not found.");
@@ -46,13 +45,7 @@ namespace inventory.api.Application.Commands
                     await userRepository.UpdateAsync(user);
 
                     await productRepository.UpdateAsync(product);
-                }
-                catch (Exception ex)
-                {
-                    return false;
-                }
-
-                return true;
+              
             }
         }
     }
