@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using inventory.api.Application.Commands;
+using inventory.api.Dtoes;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace inventory.api.Controllers;
 
-[Route("api/[controller]")]
-[ApiController]
 public class OrderController : BaseController
 {
+    [HttpPost("Buy")]
+    public Task<bool> AddProduct(AddOrderDto command)
+    => Mediator.Send(new AddOrderCommand(command));
 }
