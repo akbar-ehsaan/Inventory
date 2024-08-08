@@ -1,4 +1,6 @@
-﻿namespace inventory.domain.Core
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace inventory.domain.Core
 {
     public class User
     {
@@ -10,7 +12,10 @@
         {
                 
         }
-
+        public void SetName(string name)
+        {
+            Name = name;
+        }
         public User(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

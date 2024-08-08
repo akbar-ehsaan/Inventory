@@ -28,23 +28,10 @@ namespace inventory.infrastructure
                 .HasIndex(p => p.Title)
                 .IsUnique();
 
-            // Configure User and Orders relationship
             modelBuilder.Entity<User>()
-                .HasMany(u => u.Orders)
-                .WithOne(o => o.Buyer)
-                .HasForeignKey(o => o.BuyerId)  // Make sure to use BuyerId here
-                .OnDelete(DeleteBehavior.Restrict);
+                     .HasKey(u => u.Id); // T
 
-            // Configure Order and Product relationship
-            modelBuilder.Entity<Order>()
-                .HasOne(o => o.Product)
-                .WithMany()  // No navigation property on Product side
-                .HasForeignKey(o => o.ProductId)  // Make sure to use ProductId here
-                .HasForeignKey(o => o.BuyerId);  // Make sure to use ProductId here
 
-            modelBuilder.Entity<Order>()
-                .Property(o => o.CreationDate)
-                .HasDefaultValueSql("GETUTCDATE()");
 
 
             modelBuilder.Entity<User>().HasData(

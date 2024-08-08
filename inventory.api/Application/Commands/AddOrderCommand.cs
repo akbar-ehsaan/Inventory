@@ -31,21 +31,22 @@ namespace inventory.api.Application.Commands
         {
             public async Task Handle(AddOrderCommand request, CancellationToken cancellationToken)
             {
-               
-                    var user = await userRepository.GetByIdAsync(Guid.Parse(request.Order.UserId));
 
-                    if (user == null) throw new Exception("User not found.");
+                var user = await userRepository.GetByIdAsync(Guid.Parse(request.Order.UserId));
 
-                    var product = await productRepository.GetByIdAsync(Guid.Parse(request.Order.ProductId));
 
-                    if (product == null) throw new Exception("Product not found.");
+                if (user == null) throw new Exception("User not found.");
 
-                    user.PlaceOrder(product, request.Order.Amount);
+                var product = await productRepository.GetByIdAsync(Guid.Parse(request.Order.ProductId));
 
-                    await userRepository.UpdateAsync(user);
+                if (product == null) throw new Exception("Product not found.");
 
-                    await productRepository.UpdateAsync(product);
-              
+                user.PlaceOrder(product, request.Order.Amount);
+
+                await userRepository.UpdateAsync(user);
+                await productRepository.UpdateAsync(product);
+
+
             }
         }
     }
