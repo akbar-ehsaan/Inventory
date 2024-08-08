@@ -8,9 +8,9 @@ namespace inventory.api.Application.Queries;
 
 public sealed record class GetProductByIdQuery(string ProductId) : IRequest<Product>
 {
-    public sealed class AddProductValidator : AbstractValidator<GetProductByIdQuery>
+    public sealed class GetProductByIdValidator : AbstractValidator<GetProductByIdQuery>
     {
-        public AddProductValidator() 
+        public GetProductByIdValidator() 
             => RuleFor(x => x.ProductId)
                 .NotEmpty().WithMessage("ProductId is required.");
     }
