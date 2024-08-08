@@ -6,6 +6,10 @@
         public string Name { get; private set; }
         private readonly List<Order> _orders = new List<Order>();
         public IReadOnlyCollection<Order> Orders => _orders.AsReadOnly();
+        public User()
+        {
+                
+        }
 
         public User(string name)
         {

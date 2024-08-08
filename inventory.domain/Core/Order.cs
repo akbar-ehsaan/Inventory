@@ -7,6 +7,10 @@
         public User Buyer { get; private set; }
         public DateTime CreationDate { get; private set; }
         public int Quantity { get; private set; }
+        public Order()
+        {
+                
+        }
 
         public Order(Product product, User buyer, int quantity)
         {

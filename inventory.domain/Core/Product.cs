@@ -8,6 +8,11 @@
         public decimal Price { get; private set; }
         public decimal Discount { get; private set; } // Stored as percentage
 
+        public Product()
+        {
+                
+        }
+
         public Product(string title, int inventoryCount, decimal price, decimal discount)
         {
             if (string.IsNullOrWhiteSpace(title) || title.Length > 40)

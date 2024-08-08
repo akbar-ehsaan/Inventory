@@ -16,6 +16,7 @@ namespace inventory.infrastructure.Repositories
 
                 // Register the repository
                 services.AddScoped<IProductRepository, ProductRepository>();
+                services.AddScoped<IUserRepository, UserRepository>();
 
                 return services;
             }

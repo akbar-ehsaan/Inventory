@@ -1,4 +1,5 @@
-﻿using inventory.api.Dtoes;
+﻿using FluentValidation;
+using inventory.api.Dtoes;
 using inventory.domain.Contracts;
 using inventory.domain.Core;
 using inventory.infrastructure.Repositories;
@@ -8,6 +9,23 @@ namespace inventory.api.Application.Commands
 {
     public sealed record AddOrderCommand(AddOrderDto Order) : IRequest<bool>
     {
+
+        public sealed class AddOrderValidator : AbstractValidator<AddOrderCommand>
+        {
+            public AddOrderValidator()
+            {
+
+                RuleFor(x => x.Order.ProductId)
+                    .NotEmpty().WithMessage("ProductId is required.");
+
+                RuleFor(x => x.Order.UserId)
+                  .NotEmpty().WithMessage("UserId is required.");
+
+                RuleFor(x => x.Order.Amount)
+                  .NotEmpty().WithMessage("Amount is required.");
+
+            }
+        }
         public sealed class Handler(IProductRepository productRepository
                                     , IUserRepository userRepository) : IRequestHandler<AddOrderCommand, bool>
         {

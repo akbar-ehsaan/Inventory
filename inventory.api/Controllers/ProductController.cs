@@ -19,7 +19,7 @@ public class ProductController : BaseController
     public Task<Product> GetById(string productId)
         => Mediator.Send(new GetProductByIdQuery(productId));
 
-    [HttpPut]
+    [HttpPut("IncreaseInventory")]
     public Task<bool> IncreaseInventory(IncreaseInventoryCommand cmd)
         => Mediator.Send(cmd);
 }
