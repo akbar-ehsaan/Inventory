@@ -27,6 +27,11 @@ namespace inventory.infrastructure
             modelBuilder.Entity<Product>()
                 .Property(p => p.Title)
                 .HasMaxLength(40);
+
+            modelBuilder.Entity<User>().HasData(
+                new User("Ehsan"),
+                new User ("Niki") 
+            );
         }
     }
 
