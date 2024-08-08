@@ -1,7 +1,9 @@
+using FluentValidation;
 using inventory.domain.Contracts;
 using inventory.infrastructure;
 using inventory.infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Configuration;
 
@@ -10,13 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddMediatR(cfg => 
+                            cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddDbContext<InventoryContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddInventoryRepository(builder.Configuration);
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 

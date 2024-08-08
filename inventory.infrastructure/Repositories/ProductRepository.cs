@@ -13,19 +13,34 @@ namespace inventory.infrastructure.Repositories
     {
         private readonly InventoryContext _context = context;
 
-        public async Task<Product> GetByIdAsync(Guid id) 
+        public async Task<Product> GetByIdAsync(Guid id)
             => await _context.Products.FindAsync(id);
 
-        public async Task AddAsync(Product product)
+        public async Task<bool> AddAsync(Product product)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            { return false; }
         }
 
-        public async Task UpdateAsync(Product product)
+        public async Task<bool> UpdateAsync(Product product)
         {
-            _context.Products.Update(product);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Products.Update(product);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            { return false; }
         }
+
+        public async Task<bool> IsTitleTakenAsync(string title) 
+            => _context.Products.Where(i => i.Title == title).Any() ? false : true;
     }
 }
