@@ -45,12 +45,18 @@
         {
             return Price * (1 - Discount / 100);
         }
-
+        //price can be a value object =>TODO...
         public void UpdatePrice(decimal newPrice)
         {
             if (newPrice <= 0)
                 throw new ArgumentException("New price must be greater than zero.");
             Price = newPrice;
+        }
+        public void UpdateTitle(string newTitle)
+        {
+            if (string.IsNullOrWhiteSpace(newTitle) || newTitle.Length > 40)
+                throw new ArgumentException("Product title must be between 1 and 40 characters.");
+            Title = newTitle;
         }
 
         public void UpdateDiscount(decimal newDiscount)

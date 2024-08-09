@@ -26,7 +26,7 @@ namespace inventory.api.Application.Commands
                 if (product is not null)
                 {
                     product.IncreaseInventory(request.Amount);
-                     await productRepository.UpdateAsync(product);
+                    await productRepository.UpdateAsync(product);
                 }
                 throw new Exception("Product doesn't exist");
 

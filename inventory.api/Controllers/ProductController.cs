@@ -22,4 +22,8 @@ public class ProductController : BaseController
     [HttpPut("IncreaseInventory")]
     public Task IncreaseInventory(IncreaseInventoryCommand cmd)
         => Mediator.Send(cmd);
+
+    [HttpPut]
+    public Task Modify(ModifyProductDto cmd)
+      => Mediator.Send(new ModifyProductCommand(cmd));
 }

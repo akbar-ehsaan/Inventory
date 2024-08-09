@@ -12,10 +12,6 @@ namespace inventory.domain.Core
         {
                 
         }
-        public void SetName(string name)
-        {
-            Name = name;
-        }
         public User(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

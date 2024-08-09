@@ -6,7 +6,7 @@ namespace inventory.api.Dtoes
    
     public record AddProductDto(Guid Id, string Title, int InventoryCount, decimal Price, decimal Discount);
 
-    public static class ProductExtensions
+    public static partial class ProductExtensions
     {
         public static Product ToProductEntity(this AddProductDto dto)
         {
