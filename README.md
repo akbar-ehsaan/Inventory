@@ -21,7 +21,3 @@ The **Inventory Management API** is a sample project that demonstrates a basic i
 - xUnit (for unit testing)
 - In-Memory Caching
 - Dependency Injection
-
-
-   git clone https://github.com/yourusername/inventory-management-api.git
-   cd inventory-management-api
