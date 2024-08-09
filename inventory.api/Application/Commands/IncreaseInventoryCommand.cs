@@ -10,12 +10,10 @@ namespace inventory.api.Application.Commands
         {
             public IncreaseInventoryValidator()
             {
-
                 RuleFor(x => x.ProductId)
                     .NotEmpty().WithMessage("ProductId is required.");
                 RuleFor(x => x.Amount)
                    .NotEmpty().WithMessage("Amount is required.");
-
             }
         }
         public sealed class Hander(IProductRepository productRepository) : IRequestHandler<IncreaseInventoryCommand>
@@ -28,7 +26,8 @@ namespace inventory.api.Application.Commands
                     product.IncreaseInventory(request.Amount);
                     await productRepository.UpdateAsync(product);
                 }
-                throw new Exception("Product doesn't exist");
+                else
+                    throw new Exception("Product doesn't exist");
 
             }
         }

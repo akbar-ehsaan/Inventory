@@ -1,4 +1,6 @@
 using FluentValidation;
+using FluentValidation.AspNetCore;
+using inventory.api.Application.Commands;
 using inventory.domain.Contracts;
 using inventory.infrastructure;
 using inventory.infrastructure.Repositories;
@@ -6,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Configuration;
+using static inventory.api.Application.Commands.IncreaseInventoryCommand;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddMediatR(cfg => 
                             cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
