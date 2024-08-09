@@ -22,17 +22,6 @@ The **Inventory Management API** is a sample project that demonstrates a basic i
 - In-Memory Caching
 - Dependency Injection
 
-## Getting Started
 
-### Prerequisites
-
-- [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
-- A SQL Server instance for the database (or you can configure a different database provider)
-
-### Setup
-
-1. **Clone the repository:**
-
-   ```sh
    git clone https://github.com/yourusername/inventory-management-api.git
    cd inventory-management-api
