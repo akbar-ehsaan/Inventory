@@ -2,7 +2,10 @@
 using inventory.api.Application.Commands;
 using inventory.domain.Contracts;
 using inventory.domain.Core;
+using inventory.infrastructure.Cache;
+using inventory.infrastructure.Repositories;
 using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace inventory.api.Application.Queries;
 
@@ -14,9 +17,16 @@ public sealed record class GetProductByIdQuery(string ProductId) : IRequest<Prod
             => RuleFor(x => x.ProductId)
                 .NotEmpty().WithMessage("ProductId is required.");
     }
-    public sealed class Handler(IProductRepository productRepository) : IRequestHandler<GetProductByIdQuery, Product>
+    public sealed class Handler(IProductRepository productRepository,ICacheService cacheService) : IRequestHandler<GetProductByIdQuery, Product>
     {
-        public async Task<Product> Handle(GetProductByIdQuery request, CancellationToken cancellationToken) 
-            => await productRepository.GetByIdAsync(Guid.Parse(request.ProductId));
+        public async Task<Product> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+        {
+            string cacheKey = $"Product_{request.ProductId}";
+
+            return await cacheService.GetOrCreateAsync(
+                cacheKey,
+                async () => await productRepository.GetByIdAsync(Guid.Parse(request.ProductId)),
+                TimeSpan.FromMinutes(5));
+        }
     }
 }

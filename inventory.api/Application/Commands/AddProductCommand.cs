@@ -31,7 +31,7 @@ public sealed record AddProductCommand(Product product) : IRequest
                       .InclusiveBetween(0, 100).WithMessage("Discount must be between 0 and 100.");
         }
     }
-    public sealed class Handler(IProductRepository productRepository) : IRequestHandler<AddProductCommand>
+    public sealed class Handler(IProductRepository productRepository,ICacheService cacheService) : IRequestHandler<AddProductCommand>
     {
         public async Task Handle(AddProductCommand request, CancellationToken cancellationToken) =>
             await productRepository.AddAsync(request.product);

@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using inventory.api.Application.Commands;
 using inventory.domain.Contracts;
 using inventory.infrastructure;
+using inventory.infrastructure.Cache;
 using inventory.infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,7 @@ builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInventoryRepository(builder.Configuration);
-builder.Services.AddMemoryCache();
+builder.Services.AddCacheService(builder.Configuration);
 
 var app = builder.Build();
 
